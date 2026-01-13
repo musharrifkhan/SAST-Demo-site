@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAST - Membership Signup</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: #121212;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      background-image: url("https://media.istockphoto.com/id/1732963074/photo/starry-night-sky-in-space.jpg?b=1&s=612x612&w=0&k=20&c=Dg_mUPuApkS5-v-jitf3IMgjFBYUk1b7EMRxXDcDfJ4=");
+    }
+    .shell {
+      width: 100%;
+      max-width: 1280px;
+      height: 100%;
+      max-height: 720px;
+      background: #050505;
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+    .hero-left {
+      flex: 1.2;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-media {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.45) 40%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+    .hero-text {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      right: 32px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .hero-logo-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: #000;
+    }
+
+    .hero-logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .hero-logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-logo-text span:first-child {
+      letter-spacing: 0.12em;
+      font-size: 14px;
+    }
+
+    .hero-logo-text span:last-child {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #d1d5db;
+    }
+
+    .hero-headline {
+      margin-top: 12px;
+      max-width: 420px;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .hero-headline span.highlight {
+      background: #ffffff;
+      color: #000000;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .hero-subheadline {
+      font-size: 14px;
+      opacity: 0.9;
+      max-width: 420px;
+    }
+
+    .hero-bullets {
+      margin-top: 8px;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      color: #e5e7eb;
+    }
+
+    .hero-bullets span::before {
+      content: "• ";
+    }
+
+    /* Right auth panel */
+    .auth-right {
+      flex: 0.9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      background: #141414;
+    }
+
+    .form-card {
+      width: 100%;
+      max-width: 380px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px 28px 28px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .form-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
+    .form-subtitle {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 11px;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: #111827;
+      box-shadow: 0 0 0 1px #11182722;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 0;
+      border: none;
+      border-radius: 999px;
+      background: #111827;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #020617;
+    }
+
+    .or-separator {
+      display: flex;
+      align-items: center;
+      margin: 18px 0 14px;
+      color: #9ca3af;
+      font-size: 11px;
+    }
+
+    .or-line {
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+
+    .or-text {
+      margin: 0 8px;
+    }
+
+    .oauth-btn {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      padding: 9px 0;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .oauth-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .oauth-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .oauth-btn.google {
+      border-color: #e5e7eb;
+      background: #ffffff;
+      color: #111827;
+    }
+
+
+    .oauth-btn.facebook {
+      border-color: #e5e7eb;
+      background: #ffffff;
+      color: #111827;
+    }
+
+
+    .oauth-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.18);
+    }
+
+    .oauth-btn:hover {
+      background: #f9fafb;
+    }
+
+    .form-footer {
+      margin-top: 10px;
+      font-size: 12px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    .form-footer a {
+      color: #111827;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .shell {
+        flex-direction: column;
+        max-height: none;
+      }
+
+      .hero-left {
+        height: 260px;
+      }
+
+      .auth-right {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero-left">
+      <video
+        class="hero-media"
+        src="https://www.pexels.com/download/video/854228/"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-text">
+        <div class="hero-logo">
+          <div class="hero-logo-icon">
+            <img src="sastlogo.png" alt="SAST Logo" />
+          </div>
+          <div class="hero-logo-text">
+            <span>SAST</span>
+            <span>Society of Aerospace and Space Technology</span>
+          </div>
+        </div>
+
+        <h1 class="hero-headline">
+          <span class="highlight">Become</span> a member of this innovative club.
+        </h1>
+        <p class="hero-subheadline">
+          Join a student-led community that designs, builds, and explores cutting-edge space-tech projects from campus.
+        </p>
+        <div class="hero-bullets">
+          <span>Collaborate on rockets, rovers, sats, and simulators.</span>
+          <span>Learn from peers, mentors, and industry sessions.</span>
+          <span>Turn your curiosity into real missions and demos.</span>
+        </div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="form-card">
+        <h2 class="form-title">Request SAST Membership</h2>
+        <p class="form-subtitle">
+          Create your member account to stay updated on launches, meets, and projects.
+        </p>
+
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="signup-username">Username</label>
+            <input
+              type="text"
+              id="signup-username"
+              placeholder="Choose a unique handle"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="signup-email">College Email</label>
+            <input
+              type="email"
+              id="signup-email"
+              placeholder="you@college.edu"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input
+              type="password"
+              id="signup-password"
+              placeholder="Create a strong password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="submit-btn">Become a member</button>
+
+          <div class="or-separator">
+            <div class="or-line"></div>
+            <span class="or-text">OR</span>
+            <div class="or-line"></div>
+          </div>
+
+
+          <button type="button" class="oauth-btn">
+            <span class="oauth-icon">
+              <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google logo" />
+            </span>
+            <span>Continue with Google</span>
+          </button>
+
+          <button type="button" class="oauth-btn">
+            <span class="oauth-icon">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook logo" />
+            </span>
+            <span>Continue with Facebook</span>
+          </button>
+
+          <p class="form-footer">
+            Already a member?
+            <a href="login.html">Log in instead</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic submit handler -->
+  <script>
+    const signupForm = document.getElementById('signupForm');
+
+    signupForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('signup-username').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value.trim();
+
+      if (!username || !email || !password) {
+        alert('Please fill all required fields.');
+        return;
+      }
+      window.location.href = 'home.html';
+    });
+  </script>
+</body>
+</html>
